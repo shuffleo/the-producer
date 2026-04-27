@@ -1,0 +1,100 @@
+identity:
+ name: "Video Art Nocturne"
+ category: custom
+ mood: moody, atmospheric, reflective, tactile
+ pace: deliberate
+ best_for: "Experimental short films, poetic montage, abstract animated sequences, nocturnal city essays"
+
+visual_language:
+ color_palette:
+  primary: ["#121826", "#1F2A44"]
+  accent: ["#7C8CFF", "#D49BFF"]
+  background: "#090B12"
+  text: "#EAEAF2"
+  muted: "#8A90A8"
+ composition: asymmetric framing, deep negative space, layered foreground haze
+ texture: fine grain, soft bloom highlights, low-contrast shadows, restrained neon accents
+
+typography:
+ headings:
+  font: "Inter"
+  weight: 600
+  tracking: "0.01em"
+ body:
+  font: "Inter"
+  weight: 400
+  line_height: 1.6
+ code:
+  font: "Fira Code"
+  weight: 400
+ stat_card:
+  font: "Inter"
+  weight: 700
+  size_multiplier: 3.2
+ scale_system: "major_third"
+ weight_matrix:
+  title: 700
+  heading: 600
+  body: 400
+  caption: 300
+
+motion:
+ transitions: [dissolve, crossfade, fade]
+ animation_style: "spring(1, 55, 18), smooth, low-amplitude drift"
+ pacing_rules:
+  min_scene_hold_seconds: 2.5
+  max_scene_hold_seconds: 7.0
+  text_card_hold_seconds: 3.0
+  stat_card_hold_seconds: 2.5
+  transition_duration_seconds: 0.7
+ entrance: "fade in with subtle scale drift"
+ exit: "slow dissolve"
+
+audio:
+ voice_style: "minimal spoken voice, low-energy intimate tone when used"
+ music_mood: "ambient electronic, sparse piano, textured drones"
+ music_volume: 0.2
+ sfx_style: "subtle room tone, distant mechanical hum, soft impacts"
+ ducking_threshold_db: -4
+
+asset_generation:
+ image_prompt_prefix: >
+  cinematic night photography aesthetic, atmospheric haze, practical lights,
+  controlled contrast, documentary texture, restrained palette,
+ image_negative_prompt: "cartoon, flat vector, oversaturated, harsh midday lighting, watermark, text overlay"
+ consistency_anchors:
+  - "Low-key lighting with one dominant practical light source"
+  - "Primary palette stays in deep blue-violet neutrals"
+  - "Visible texture and grain in every scene"
+  - "Strong foreground/background depth separation"
+
+overlays:
+ stat_card:
+  bg: "rgba(9, 11, 18, 0.78)"
+  border: "#7C8CFF"
+  radius: 12
+  shadow: "0 8px 24px rgba(0, 0, 0, 0.35)"
+ key_term:
+  bg: "rgba(31, 42, 68, 0.72)"
+  text: "#D49BFF"
+  radius: 8
+
+quality_rules:
+ - "Minimum contrast ratio 4.5:1 for all readable text"
+ - "No rapid strobing transitions"
+ - "Keep motion subtle; avoid aggressive zooms"
+ - "Preserve tonal consistency across all generated scenes"
+ - "Do not burn text directly into generated images"
+
+chart_palette:
+ - "#7C8CFF"
+ - "#D49BFF"
+ - "#4DB6FF"
+ - "#B8C0FF"
+ - "#8A90A8"
+ - "#EAEAF2"
+
+color_rules:
+ harmony_type: "analogous"
+ contrast_validation: true
+ colorblind_safe: true

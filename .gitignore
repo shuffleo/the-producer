@@ -69,6 +69,7 @@ Thumbs.db
 
 # Node (for remotion-composer/)
 node_modules/
+.npm-cache/
 
 # Remotion build output and copied project assets (regenerable at render time)
 remotion-composer/out/

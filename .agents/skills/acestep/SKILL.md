@@ -1,7 +1,7 @@
 ---
-name: acestep
+
+## name: acestep
 description: AI music generation with ACE-Step 1.5 — background music, vocal tracks, covers, stem extraction for video production. Use when generating music, soundtracks, jingles, or working with audio stems. Triggers include background music, soundtrack, jingle, music generation, stem extraction, cover, style transfer, or musical composition tasks.
----
 
 # ACE-Step 1.5 Music Generation
 
@@ -38,11 +38,13 @@ python tools/music_gen.py --list-presets
 ## Creating a Song (Step by Step)
 
 ### 1. Instrumental background track (simplest)
+
 ```bash
 python tools/music_gen.py --prompt "Upbeat indie rock, driving drums, jangly guitar" --duration 60 --bpm 120 --key "G Major" --output track.mp3
 ```
 
 ### 2. Song with vocals and lyrics
+
 Write lyrics in a temp file or pass inline. Use structure tags to control song sections.
 
 ```bash
@@ -87,11 +89,13 @@ python tools/music_gen.py \
 ```
 
 ### 3. Using a preset for video background
+
 ```bash
 python tools/music_gen.py --preset tension --duration 20 --output problem_scene.mp3
 ```
 
 ### Key tips for good results
+
 - **Caption = overall style** (genre, instruments, mood, production quality)
 - **Lyrics = temporal structure** (verse/chorus flow, vocal delivery)
 - **UPPERCASE in lyrics** = high vocal intensity
@@ -102,40 +106,49 @@ python tools/music_gen.py --preset tension --duration 20 --output problem_scene.
 
 ## Scene Presets
 
-| Preset | BPM | Key | Use Case |
-|--------|-----|-----|----------|
+
+| Preset         | BPM | Key     | Use Case                               |
+| -------------- | --- | ------- | -------------------------------------- |
 | `corporate-bg` | 110 | C Major | Professional background, presentations |
-| `upbeat-tech` | 128 | G Major | Product launches, tech demos |
-| `ambient` | 72 | D Major | Overview slides, reflective content |
-| `dramatic` | 90 | D Minor | Reveals, announcements |
-| `tension` | 85 | A Minor | Problem statements, challenges |
-| `hopeful` | 120 | C Major | Solution reveals, resolutions |
-| `cta` | 135 | E Major | Call to action, closing energy |
-| `lofi` | 85 | F Major | Screen recordings, coding demos |
+| `upbeat-tech`  | 128 | G Major | Product launches, tech demos           |
+| `ambient`      | 72  | D Major | Overview slides, reflective content    |
+| `dramatic`     | 90  | D Minor | Reveals, announcements                 |
+| `tension`      | 85  | A Minor | Problem statements, challenges         |
+| `hopeful`      | 120 | C Major | Solution reveals, resolutions          |
+| `cta`          | 135 | E Major | Call to action, closing energy         |
+| `lofi`         | 85  | F Major | Screen recordings, coding demos        |
+
 
 ## Task Types
 
 ### text2music (default)
+
 Generate music from text prompt + optional lyrics.
 
 ### cover
+
 Style transfer from reference audio. Control blend with `--cover-strength` (0.0-1.0):
+
 - **0.2** — Loose style inspiration (more creative freedom)
 - **0.5** — Balanced style transfer
 - **0.7** — Close to original structure (default)
 - **1.0** — Maximum fidelity to source
 
 ### extract
+
 Stem separation — isolate individual tracks from mixed audio.
 Tracks: `vocals`, `drums`, `bass`, `guitar`, `piano`, `keyboard`, `strings`, `brass`, `woodwinds`, `other`
 
 ### repaint (future)
+
 Regenerate a specific time segment within existing audio while preserving the rest.
 
 ### lego (future, requires base model)
+
 Generate individual instrument tracks within an existing audio context.
 
 ### complete (future, requires base model)
+
 Extend partial compositions by adding specified instruments.
 
 ## Prompt Engineering
@@ -145,6 +158,7 @@ Extend partial compositions by adding specified instruments.
 Write captions by layering multiple descriptive dimensions rather than single-word descriptions.
 
 **Dimensions to include:**
+
 - **Genre/Style**: pop, rock, jazz, electronic, lo-fi, synthwave, orchestral
 - **Emotion/Mood**: melancholic, euphoric, dreamy, nostalgic, intimate, tense
 - **Instruments**: acoustic guitar, synth pads, 808 drums, strings, brass, piano
@@ -167,6 +181,7 @@ Write captions by layering multiple descriptive dimensions rather than single-wo
 ### Lyrics Formatting
 
 **Structure tags** (use in lyrics, not caption):
+
 ```
 [Intro]
 [Verse]
@@ -181,6 +196,7 @@ Write captions by layering multiple descriptive dimensions rather than single-wo
 ```
 
 **Vocal control** (prefix lines or sections):
+
 ```
 [raspy vocal]
 [whispered]
@@ -191,11 +207,13 @@ Write captions by layering multiple descriptive dimensions rather than single-wo
 ```
 
 **Energy indicators:**
+
 - UPPERCASE = high intensity ("WE RISE ABOVE")
 - Parentheses = background vocals ("We rise (together)")
 - Keep 6-10 syllables per line within sections for natural rhythm
 
 **Example — Tech Product Jingle:**
+
 ```
 [Verse]
 Build it better, ship it faster
@@ -214,15 +232,17 @@ Digital Samba, every page
 
 ### Music for Scene Types
 
-| Scene | Preset | Duration | Notes |
-|-------|--------|----------|-------|
-| Title | `dramatic` or `ambient` | 3-5s | Short, mood-setting |
-| Problem | `tension` | 10-15s | Dark, unsettling |
-| Solution | `hopeful` | 10-15s | Relief, optimism |
-| Demo | `lofi` or `corporate-bg` | 30-120s | Non-distracting, matches demo length |
-| Stats | `upbeat-tech` | 8-12s | Building credibility |
-| CTA | `cta` | 5-10s | Maximum energy, punchy |
-| Credits | `ambient` | 5-10s | Gentle fade-out |
+
+| Scene    | Preset                   | Duration | Notes                                |
+| -------- | ------------------------ | -------- | ------------------------------------ |
+| Title    | `dramatic` or `ambient`  | 3-5s     | Short, mood-setting                  |
+| Problem  | `tension`                | 10-15s   | Dark, unsettling                     |
+| Solution | `hopeful`                | 10-15s   | Relief, optimism                     |
+| Demo     | `lofi` or `corporate-bg` | 30-120s  | Non-distracting, matches demo length |
+| Stats    | `upbeat-tech`            | 8-12s    | Building credibility                 |
+| CTA      | `cta`                    | 5-10s    | Maximum energy, punchy               |
+| Credits  | `ambient`                | 5-10s    | Gentle fade-out                      |
+
 
 ### Timing Workflow
 
@@ -234,6 +254,7 @@ Digital Samba, every page
 ### Combining with Voiceover
 
 Background music should be mixed at 10-20% volume in Remotion:
+
 ```tsx
 <Audio src={staticFile('voiceover.mp3')} volume={1} />
 <Audio src={staticFile('bg-music.mp3')} volume={0.15} />
@@ -258,7 +279,9 @@ For consistent sound across a project: fix the seed (`--seed 42`) and vary only 
 - **Shift parameter**: 3.0 recommended for turbo (improves quality)
 
 ### When NOT to use ACE-Step
+
 - **Voice cloning** — use Qwen3-TTS or ElevenLabs instead
 - **Sound effects** — use ElevenLabs SFX (`tools/sfx.py`)
 - **Speech/narration** — use voiceover tools, not music gen
 - **Stem extraction from video** — extract audio first with FFmpeg, then use `--extract`
+

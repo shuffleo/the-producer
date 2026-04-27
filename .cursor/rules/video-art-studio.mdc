@@ -1,0 +1,11 @@
+---
+description: Video art studio profile
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# Video Art Studio Profile
+
+After reading `AGENT_GUIDE.md`, read `docs/VIDEO_ART_STUDIO_PROFILE.md`.
+
+Use that profile as the default operating mode for this repository unless the user explicitly requests otherwise.

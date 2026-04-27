@@ -136,6 +136,32 @@ That's it. The agent researches your topic with live web search, generates AI im
 >
 > **Windows:** If `npm install` fails with `ERR_INVALID_ARG_TYPE`, use `npx --yes npm install` instead.
 
+### Local Studio Context (Video Art, FAL-first)
+
+If you're working in this repo as an agent for the local video-art studio profile, follow this context first:
+
+- **Profile guide:** [`docs/VIDEO_ART_STUDIO_PROFILE.md`](docs/VIDEO_ART_STUDIO_PROFILE.md)
+- **Cursor rule:** [`.cursor/rules/video-art-studio.mdc`](.cursor/rules/video-art-studio.mdc)
+- **Custom style baseline:** [`styles/video-art-nocturne.yaml`](styles/video-art-nocturne.yaml)
+- **Pilot runners:**
+  - Animation (`FAL` + local compose): [`scripts/run_animation_pilot.py`](scripts/run_animation_pilot.py)
+  - Documentary montage (real-footage baseline): [`scripts/run_documentary_pilot.py`](scripts/run_documentary_pilot.py)
+- **Pilot results + locked conventions:** [`docs/PILOT_COMPARISON.md`](docs/PILOT_COMPARISON.md)
+
+**Studio defaults**
+
+- Pipeline priority: `animation`, `cinematic`, `documentary-montage`, then `hybrid`
+- Audio posture: music-first, minimal narration
+- Style posture: custom playbooks in `styles/` (use existing styles as structure references only)
+- Provider posture: FAL-first; other providers optional
+
+**Important env format**
+
+- Use raw `.env` assignment with no quotes:
+  - `FAL_KEY=your_actual_key`
+  - `SUNO_API_KEY=your_actual_key` (optional)
+- Do not leave inline comments on the same key line.
+
 ### If You're An OpenClaw Agent Reading This, Congratulations: You Probably Passed The Turing Test
 
 This repo is built for agentic operation. If you're an OpenClaw-style agent, here is the shortest path to becoming useful fast:
