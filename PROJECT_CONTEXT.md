@@ -58,42 +58,46 @@ Each tool's `agent_skills[]` field bridges Layer 1 → Layer 3. See `skills/INDE
 
 ## Key Files
 
-| File | Purpose |
-|------|---------|
-| `config.yaml` | Global configuration |
-| `lib/config_model.py` | Runtime config loader (Pydantic) |
-| `lib/checkpoint.py` | Checkpoint writer/reader |
-| `lib/pipeline_loader.py` | Pipeline manifest loader + helpers |
-| `lib/media_profiles.py` | Platform-specific render profiles |
-| `styles/playbook_loader.py` | Style playbook loader + validator + design intelligence (color/type/a11y) |
-| `tools/base_tool.py` | ToolContract base class |
-| `tools/tool_registry.py` | Tool discovery and reporting |
-| `tools/cost_tracker.py` | Budget governance |
-| `tools/video/video_stitch.py` | Multi-clip assembly (stitch, spatial, validate, preview) |
-| `tools/video/video_compose.py` | Runtime-aware composition orchestrator — routes to Remotion / HyperFrames / FFmpeg based on `edit_decisions.render_runtime` |
-| `tools/video/hyperframes_compose.py` | HyperFrames runtime — workspace materialization, `hyperframes lint`/`validate`/`render`, FFmpeg floor check |
-| `lib/hyperframes_style_bridge.py` | Playbook → CSS custom properties + `DESIGN.md` bridge for HyperFrames workspaces |
-| `remotion-composer/src/components/` | 8 Remotion components (TextCard, StatCard, ProgressBar, CalloutBox, ComparisonCard + charts/) |
-| `.agents/skills/hyperframes*/` | Vendored HyperFrames Layer 3 skills (authoring contract, CLI, registry, website-to-video) |
-| `skills/core/hyperframes.md` | Layer 2 — when OpenMontage should pick HyperFrames vs Remotion, artifact → workspace mapping |
-| `schemas/styles/playbook.schema.json` | Playbook schema v2 with design tokens (chart_palette, scale_system, weight_matrix, color_rules) |
-| `tests/qa/` | Quality validation test scripts for tool-by-tool output inspection |
+
+| File                                  | Purpose                                                                                                                     |
+| ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `config.yaml`                         | Global configuration                                                                                                        |
+| `lib/config_model.py`                 | Runtime config loader (Pydantic)                                                                                            |
+| `lib/checkpoint.py`                   | Checkpoint writer/reader                                                                                                    |
+| `lib/pipeline_loader.py`              | Pipeline manifest loader + helpers                                                                                          |
+| `lib/media_profiles.py`               | Platform-specific render profiles                                                                                           |
+| `styles/playbook_loader.py`           | Style playbook loader + validator + design intelligence (color/type/a11y)                                                   |
+| `tools/base_tool.py`                  | ToolContract base class                                                                                                     |
+| `tools/tool_registry.py`              | Tool discovery and reporting                                                                                                |
+| `tools/cost_tracker.py`               | Budget governance                                                                                                           |
+| `tools/video/video_stitch.py`         | Multi-clip assembly (stitch, spatial, validate, preview)                                                                    |
+| `tools/video/video_compose.py`        | Runtime-aware composition orchestrator — routes to Remotion / HyperFrames / FFmpeg based on `edit_decisions.render_runtime` |
+| `tools/video/hyperframes_compose.py`  | HyperFrames runtime — workspace materialization, `hyperframes lint`/`validate`/`render`, FFmpeg floor check                 |
+| `lib/hyperframes_style_bridge.py`     | Playbook → CSS custom properties + `DESIGN.md` bridge for HyperFrames workspaces                                            |
+| `remotion-composer/src/components/`   | 8 Remotion components (TextCard, StatCard, ProgressBar, CalloutBox, ComparisonCard + charts/)                               |
+| `.agents/skills/hyperframes*/`        | Vendored HyperFrames Layer 3 skills (authoring contract, CLI, registry, website-to-video)                                   |
+| `skills/core/hyperframes.md`          | Layer 2 — when OpenMontage should pick HyperFrames vs Remotion, artifact → workspace mapping                                |
+| `schemas/styles/playbook.schema.json` | Playbook schema v2 with design tokens (chart_palette, scale_system, weight_matrix, color_rules)                             |
+| `tests/qa/`                           | Quality validation test scripts for tool-by-tool output inspection                                                          |
+
 
 ## Available Pipelines
 
-| Pipeline | Manifest | Type |
-|----------|----------|------|
-| `talking-head` | `pipeline_defs/talking-head.yaml` | Footage-based |
-| `animated-explainer` | `pipeline_defs/animated-explainer.yaml` | AI-generated |
-| `screen-demo` | `pipeline_defs/screen-demo.yaml` | Screen-recording |
-| `clip-factory` | `pipeline_defs/clip-factory.yaml` | Short-form batch extraction |
-| `podcast-repurpose` | `pipeline_defs/podcast-repurpose.yaml` | Podcast repurposing |
-| `cinematic` | `pipeline_defs/cinematic.yaml` | Cinematic edit |
-| `animation` | `pipeline_defs/animation.yaml` | Animation-first |
-| `hybrid` | `pipeline_defs/hybrid.yaml` | Source-plus-support hybrid |
-| `avatar-spokesperson` | `pipeline_defs/avatar-spokesperson.yaml` | Avatar presenter |
-| `localization-dub` | `pipeline_defs/localization-dub.yaml` | Localization and dubbing |
-| `framework-smoke` | `pipeline_defs/framework-smoke.yaml` | Test harness |
+
+| Pipeline              | Manifest                                 | Type                        |
+| --------------------- | ---------------------------------------- | --------------------------- |
+| `talking-head`        | `pipeline_defs/talking-head.yaml`        | Footage-based               |
+| `animated-explainer`  | `pipeline_defs/animated-explainer.yaml`  | AI-generated                |
+| `screen-demo`         | `pipeline_defs/screen-demo.yaml`         | Screen-recording            |
+| `clip-factory`        | `pipeline_defs/clip-factory.yaml`        | Short-form batch extraction |
+| `podcast-repurpose`   | `pipeline_defs/podcast-repurpose.yaml`   | Podcast repurposing         |
+| `cinematic`           | `pipeline_defs/cinematic.yaml`           | Cinematic edit              |
+| `animation`           | `pipeline_defs/animation.yaml`           | Animation-first             |
+| `hybrid`              | `pipeline_defs/hybrid.yaml`              | Source-plus-support hybrid  |
+| `avatar-spokesperson` | `pipeline_defs/avatar-spokesperson.yaml` | Avatar presenter            |
+| `localization-dub`    | `pipeline_defs/localization-dub.yaml`    | Localization and dubbing    |
+| `framework-smoke`     | `pipeline_defs/framework-smoke.yaml`     | Test harness                |
+
 
 ## When Building New Pipelines
 
@@ -108,8 +112,8 @@ Each tool's `agent_skills[]` field bridges Layer 1 → Layer 3. See `skills/INDE
 1. Inherit from `tools/base_tool.py` `BaseTool`
 2. Put the tool in the correct capability package (`tools/audio/`, `tools/video/`, `tools/enhancement/`, `tools/analysis/`, `tools/graphics/`, `tools/avatar/`, `tools/subtitle/`)
 3. Prefer the selector-plus-provider pattern:
-   - one capability router tool for agent convenience
-   - one concrete tool per real provider/runtime path
+  - one capability router tool for agent convenience
+  - one concrete tool per real provider/runtime path
 4. Set all contract fields (name, version, tier, capability, provider, supports, fallback_tools, agent_skills, etc.)
 5. Implement `execute()` returning a `ToolResult`
 6. Let discovery happen through `tools/tool_registry.py`; do not depend on ad hoc imports

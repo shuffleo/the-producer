@@ -17,6 +17,8 @@ Use these pipelines by default:
 - `documentary-montage`
 - `hybrid` (optional, for source+generated mixed cuts)
 
+**Editing layer:** DaVinci Resolve Studio (via MCP server for AI-assisted workflows, or manual UI for hands-on editing).
+
 De-prioritize for this profile unless explicitly requested:
 
 - `clip-factory`
@@ -58,6 +60,34 @@ Custom style minimum:
 - `overlays`
 - `quality_rules`
 
+## Video Editing — DaVinci Resolve
+
+DaVinci Resolve Studio is the primary NLE (non-linear editor) for this studio. The DaVinci Resolve MCP server is installed and configured for Cursor, enabling AI-assisted editing workflows.
+
+### Setup
+
+- **MCP server:** `davinci-resolve-mcp` (compound mode, 27 tools)
+- **Config:** `~/.cursor/mcp.json`
+- **Skill reference:** `.agents/skills/davinci-resolve/SKILL.md`
+- **Rule:** `.cursor/rules/davinci-resolve.mdc`
+
+### Capabilities via MCP
+
+- Project and timeline management (create, import, export)
+- Media pool operations (import clips, audio, images)
+- Timeline editing (append, trim, markers, tracks)
+- Color grading (CDL, LUTs, node graphs, color groups)
+- Fusion compositions (node-based VFX)
+- Render pipeline (settings, presets, queue, export)
+
+### Requirement
+
+DaVinci Resolve Studio must be running with **External scripting set to Local** (Preferences > General).
+
+## Video Production Tool Routing
+
+See `AGENT_GUIDE.md` > "Video Tool Routing — Resolve vs Remotion" for the canonical routing table.
+
 ## Session Checklist (Per Project)
 
 1. Pick one pipeline (`animation`, `cinematic`, `documentary-montage`, or `hybrid`).
@@ -67,8 +97,18 @@ Custom style minimum:
 5. Produce canonical stage artifacts and checkpoints.
 6. Archive `proposal_packet`, `scene_plan`, `edit_decisions`, and `render_report` with final output.
 
+## External Dependencies
+
+
+| Tool                | Location                                     | Purpose                                                                          |
+| ------------------- | -------------------------------------------- | -------------------------------------------------------------------------------- |
+| DaVinci Resolve MCP | `/Users/shuffleo/Github/davinci-resolve-mcp` | Video editing via MCP                                                            |
+| fal.ai              | API (FAL_KEY in `.env`)                      | AI image + video generation (Recraft, Nano Banana, GPT Image 2, Kling, Seedance) |
+
+
 ## Git Workflow
 
 - Keep `origin` as personal fork and `upstream` as `calesthio/OpenMontage`.
 - Avoid hard pruning upstream files; keep profile rules and studio assets additive.
 - Sync from upstream regularly, then push to fork for backup.
+

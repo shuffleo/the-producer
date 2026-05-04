@@ -5,7 +5,7 @@ description: Toolkit-specific Remotion patterns — custom transitions, shared c
 
 # Remotion — Toolkit Extensions
 
-> **Core Remotion knowledge** lives in `.claude/skills/remotion-official/` (synced from the official [remotion-dev/skills](https://github.com/remotion-dev/skills) repo). This file covers **toolkit-specific** patterns only.
+> **Core Remotion knowledge** lives in `.agents/skills/remotion-best-practices/` (synced from the official [remotion-dev/skills](https://github.com/remotion-dev/skills) repo). This file covers **toolkit-specific** patterns only.
 
 ## Shared Components
 
@@ -157,4 +157,4 @@ If this skill is missing information or could be improved:
   1. Update this skill with improvements
   2. Create a PR to github.com/digitalsamba/claude-code-video-toolkit
 
-Just say "improve this skill" and I'll guide you through updating `.claude/skills/remotion/SKILL.md`.
+Just say "improve this skill" and I'll guide you through updating `.agents/skills/remotion/SKILL.md`.

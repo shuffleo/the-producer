@@ -12,11 +12,13 @@ make demo                         # Render all three demos
 ./render-demo.sh --list           # See all available demos
 ```
 
-| Demo | Duration | What It Shows |
-|------|----------|--------------|
-| **world-in-numbers** | 45s | KPI grids, bar charts, pie charts, line charts, comparison cards, stat reveals |
-| **code-to-screen** | 50s | Developer education: HTTP request lifecycle with progress bars, charts, callouts |
-| **focusflow-pitch** | 40s | Startup pitch deck: traction metrics, revenue donut chart, customer testimonial |
+
+| Demo                 | Duration | What It Shows                                                                    |
+| -------------------- | -------- | -------------------------------------------------------------------------------- |
+| **world-in-numbers** | 45s      | KPI grids, bar charts, pie charts, line charts, comparison cards, stat reveals   |
+| **code-to-screen**   | 50s      | Developer education: HTTP request lifecycle with progress bars, charts, callouts |
+| **focusflow-pitch**  | 40s      | Startup pitch deck: traction metrics, revenue donut chart, customer testimonial  |
+
 
 ---
 
@@ -142,7 +144,7 @@ These use the HyperFrames composition runtime — HTML + CSS + GSAP rendered det
 
 ### Website → Video Teaser
 
-> "Here's my landing page URL: https://example.com. Make me a 15-second social ad for Instagram. Use HyperFrames and pick up the site's real colors and typography."
+> "Here's my landing page URL: [https://example.com](https://example.com). Make me a 15-second social ad for Instagram. Use HyperFrames and pick up the site's real colors and typography."
 
 **What you get:** `website-to-hyperframes` workflow — capture the site, extract colors/typography into a `DESIGN.md`, storyboard 3-4 beats, generate narration, build compositions with GSAP timelines, lint + validate + render.
 

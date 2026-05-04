@@ -1,0 +1,50 @@
+---
+description: DaVinci Resolve MCP integration for video editing
+globs: ["**/projects/**"]
+alwaysApply: false
+---
+
+# DaVinci Resolve Integration
+
+This workspace has the DaVinci Resolve MCP server configured at `~/.cursor/mcp.json`. When the user asks to edit video, assemble timelines, import media, color grade, or render in Resolve, use the MCP tools.
+
+## Prerequisites
+
+- DaVinci Resolve Studio must be running
+- Preferences > General > "External scripting using" set to **Local**
+- The MCP server uses the **compound** mode (27 tools) by default
+
+## Key tools
+
+| Tool | Common actions |
+|------|---------------|
+| `resolve_control` | `open_page`, `get_version`, `get_current_page` |
+| `project` | `get_current`, `create`, `save`, `get_setting`, `set_setting` |
+| `media_pool` | `append_to_timeline`, `import_media`, `create_timeline` |
+| `timeline` | `get_current`, `add_track`, `get_items_in_track`, `add_marker`, `export` |
+| `timeline_item` | `get_property`, `set_property`, `set_transform`, `set_composite` |
+| `render` | `set_settings`, `add_job`, `start`, `get_job_status` |
+
+## Page context matters
+
+Always switch to the correct page before operations:
+- **Edit** page for timeline operations
+- **Color** page for grading
+- **Deliver** page for rendering
+- **Media** page for importing
+
+## When to use Resolve vs Remotion
+
+| Use DaVinci Resolve | Use Remotion |
+|---|---|
+| Editing existing footage/clips into a timeline | Programmatic motion graphics and animated compositions |
+| Color grading, audio mixing, transitions | React-based templated video (data-driven, repeatable) |
+| Manual creative editing with AI assistance | Batch rendering identical structures with different data |
+| Exporting final deliverables (ProRes, H.264, etc.) | Web-deployable video players |
+| Working with AI-generated video clips | Generating overlay graphics, captions, titles |
+
+**Rule:** If the user says "edit", "assemble", "timeline", "cut", "grade", "render" with existing clips → Resolve. If the user says "generate", "compose", "template", "programmatic", "React" → Remotion. If ambiguous, ask the user.
+
+## Skill reference
+
+Read `.agents/skills/davinci-resolve/SKILL.md` for the full tool reference, workflow patterns, error recovery, and known gotchas.

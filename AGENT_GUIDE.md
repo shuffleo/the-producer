@@ -2,7 +2,7 @@
 
 Start here. This is the complete operating guide and agent contract for OpenMontage.
 
-For architecture, key files, and conventions see [`PROJECT_CONTEXT.md`](PROJECT_CONTEXT.md).
+For architecture, key files, and conventions see `[PROJECT_CONTEXT.md](PROJECT_CONTEXT.md)`.
 
 ## First Interaction — Onboarding
 
@@ -31,11 +31,11 @@ This is a first-class workflow in OpenMontage.
 1. **Read:** `skills/meta/video-reference-analyst.md`
 2. **Run the reference analysis workflow** using the local analysis tools (`video_analyzer`, transcript extraction, scene detection, frame sampling)
 3. **Produce a grounded summary** of what the reference is doing:
-   - content
-   - pacing
-   - structure
-   - style
-   - what makes it work
+  - content
+  - pacing
+  - structure
+  - style
+  - what makes it work
 4. **Then** run normal capability audit and pipeline selection
 5. Present **2-3 differentiated concepts** for the user's version — not a carbon copy
 
@@ -45,6 +45,24 @@ This is a first-class workflow in OpenMontage.
 - **Source-footage request:** "edit this footage" / "cut this into clips" -> use `source_media_review` and the appropriate footage-led pipeline
 
 If a model misses this distinction, it will often fall back to plain search + guesswork. That is incorrect for OpenMontage.
+
+## Video Tool Routing — Resolve vs Remotion
+
+Two video production tools are available. Route based on the task, not preference.
+
+
+| Signal in user request                                                                                           | Route to                  | Skill                                     |
+| ---------------------------------------------------------------------------------------------------------------- | ------------------------- | ----------------------------------------- |
+| "edit", "assemble", "timeline", "cut", "grade", "color", "render", "export", "mix audio", combine existing clips | **DaVinci Resolve** (MCP) | `.agents/skills/davinci-resolve/SKILL.md` |
+| "generate video", "compose", "template", "React component", "programmatic", "motion graphics", "data-driven"     | **Remotion**              | `.agents/skills/remotion/SKILL.md`        |
+| Combining AI-generated clips + audio into a final cut                                                            | **DaVinci Resolve**       | Editing task                              |
+| Creating animated overlays, captions, titles to composite                                                        | **Remotion**              | Composition task                          |
+| Ambiguous or unclear                                                                                             | **Ask the user**          | Never guess                               |
+
+
+Both can coexist: generate assets with Remotion, assemble the final cut in Resolve.
+
+**DaVinci Resolve requires:** Resolve Studio running, External scripting set to Local.
 
 ## Rule Zero — All Production Goes Through a Pipeline
 
@@ -59,6 +77,7 @@ When the user asks to make, create, produce, or generate any video content — a
 5. **Read Layer 3 skills before calling tools.** Before using any tool with an `agent_skills` field, read the referenced skill in `.agents/skills/`. These contain provider-specific prompting guidance, parameter optimization, and quality techniques that dramatically improve output.
 
 **Do NOT:**
+
 - Write ad-hoc Python scripts to call tools directly
 - Skip the pipeline and go straight to API calls
 - Generate assets without reading the stage director skill first
@@ -221,19 +240,21 @@ If the folder has tracks, the proposal and asset stages should present them as o
 
 ## Available Pipelines
 
-| Pipeline | Best For | Stability |
-|----------|----------|-----------|
-| `animated-explainer` | Topic to fully generated explainer | production |
-| `talking-head` | Footage-led speaker videos | beta |
-| `screen-demo` | Screen recordings and walkthroughs | production |
-| `clip-factory` | Many clips from one long source | beta |
-| `podcast-repurpose` | Podcast highlights and derivatives | beta |
-| `cinematic` | Trailer, teaser, and mood-led edits | production |
-| `animation` | Motion-graphics and animation-first videos | production |
-| `hybrid` | Source footage plus support visuals | production |
-| `avatar-spokesperson` | Presenter-led avatar or lip-sync videos | production |
-| `localization-dub` | Subtitle, dub, and translated variants | beta |
-| `framework-smoke` | Test: minimal 2-stage smoke test | test |
+
+| Pipeline              | Best For                                   | Stability  |
+| --------------------- | ------------------------------------------ | ---------- |
+| `animated-explainer`  | Topic to fully generated explainer         | production |
+| `talking-head`        | Footage-led speaker videos                 | beta       |
+| `screen-demo`         | Screen recordings and walkthroughs         | production |
+| `clip-factory`        | Many clips from one long source            | beta       |
+| `podcast-repurpose`   | Podcast highlights and derivatives         | beta       |
+| `cinematic`           | Trailer, teaser, and mood-led edits        | production |
+| `animation`           | Motion-graphics and animation-first videos | production |
+| `hybrid`              | Source footage plus support visuals        | production |
+| `avatar-spokesperson` | Presenter-led avatar or lip-sync videos    | production |
+| `localization-dub`    | Subtitle, dub, and translated variants     | beta       |
+| `framework-smoke`     | Test: minimal 2-stage smoke test           | test       |
+
 
 > **Beta pipelines** have not been fully audited. They work, but expect rough edges. Mention this when the user selects one.
 
@@ -318,8 +339,9 @@ Already Available:
 ```
 
 **Rules:**
+
 - Do NOT hardcode provider names, API key names, or setup URLs in your prompts.
-  Read them from the registry's `install_instructions` field on each tool.
+Read them from the registry's `install_instructions` field on each tool.
 - Always show the ratio: "X of Y configured" — this makes breadth visible.
 - Group by capability, not by individual tool.
 - Show what they CAN do now, then what they COULD unlock.
@@ -330,13 +352,16 @@ Already Available:
 
 When tools are `UNAVAILABLE` but can be fixed with simple configuration, **offer the user setup help instead of silently working around the limitation.** Many tools are one env var away from working.
 
-| Fix Complexity | Action |
-|----------------|--------|
-| **1-minute fix** (env var) | Offer to help configure now — read `install_instructions` from the tool |
-| **5-minute fix** (install) | Explain what to install and why — read `install_instructions` from the tool |
-| **Complex fix** (GPU, model download) | Note the limitation, explain what it would unlock, move on |
+
+| Fix Complexity                        | Action                                                                      |
+| ------------------------------------- | --------------------------------------------------------------------------- |
+| **1-minute fix** (env var)            | Offer to help configure now — read `install_instructions` from the tool     |
+| **5-minute fix** (install)            | Explain what to install and why — read `install_instructions` from the tool |
+| **Complex fix** (GPU, model download) | Note the limitation, explain what it would unlock, move on                  |
+
 
 **Rules:**
+
 - Always tell the user what they're missing AND what they'd gain
 - Show the cost difference (free local vs. paid API)
 - If the user declines setup, proceed with the best available path — no nagging
@@ -357,11 +382,13 @@ print('HyperFrames note:', info.get('hyperframes_note'))
 "
 ```
 
-| Engine | Used For | Requires |
-|--------|----------|----------|
-| **FFmpeg** | Video-only cuts, concat, trim, subtitle burn | `ffmpeg` binary (always available) |
-| **Remotion** | React-based composition: still images → animated video, text cards, stat cards, charts, callouts, comparisons, transitions with spring physics, word-level caption burn, TalkingHead avatar | Node.js (`npx`) + `remotion-composer/` + `node_modules` |
-| **HyperFrames** | HTML/CSS/GSAP composition: kinetic typography, product promos, launch reels, website-to-video, registry-block-driven scenes | Node.js ≥ 22 + FFmpeg + `npx` (consumed via `npx @hyperframes/cli`) |
+
+| Engine          | Used For                                                                                                                                                                                    | Requires                                                            |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| **FFmpeg**      | Video-only cuts, concat, trim, subtitle burn                                                                                                                                                | `ffmpeg` binary (always available)                                  |
+| **Remotion**    | React-based composition: still images → animated video, text cards, stat cards, charts, callouts, comparisons, transitions with spring physics, word-level caption burn, TalkingHead avatar | Node.js (`npx`) + `remotion-composer/` + `node_modules`             |
+| **HyperFrames** | HTML/CSS/GSAP composition: kinetic typography, product promos, launch reels, website-to-video, registry-block-driven scenes                                                                 | Node.js ≥ 22 + FFmpeg + `npx` (consumed via `npx @hyperframes/cli`) |
+
 
 `render_runtime` is **locked at proposal** (`proposal_packet.production_plan.render_runtime`) and **carried through edit_decisions unchanged**. `video_compose` routes based on this field; silent runtime swaps are forbidden. If the chosen runtime becomes unavailable at compose time, surface a structured blocker per "Escalate Blockers Explicitly" above. See `skills/core/hyperframes.md` for the Remotion-vs-HyperFrames decision matrix.
 
@@ -385,6 +412,7 @@ For these requests:
 - Do not spend more tokens or time on downgraded output unless the user explicitly approves the downgrade as an animatic or proof-of-concept.
 
 **When Remotion is available**, the agent should design production plans around it:
+
 - Explainer videos with `flat-motion-graphics` playbook -> Remotion animated scenes, not Ken Burns
 - Data-driven videos -> Remotion stat cards and charts, not static image screenshots
 - Any pipeline using still images -> Remotion spring animations, not FFmpeg pan-and-zoom
@@ -456,14 +484,16 @@ Each tool in the registry declares `best_for`, `install_instructions`, `runtime`
 
 All tool classes use **PascalCase without a "Tool" suffix**. When importing tools in Python:
 
-| Module | Class Name | NOT |
-|--------|-----------|-----|
-| `tools.audio.music_gen` | `MusicGen` | ~~MusicGenTool~~ |
-| `tools.video.video_compose` | `VideoCompose` | ~~VideoComposeTool~~ |
-| `tools.audio.audio_mixer` | `AudioMixer` | ~~AudioMixerTool~~ |
-| `tools.tts.elevenlabs_tts` | `ElevenLabsTTS` | ~~ElevenLabsTTSTool~~ |
-| `tools.analysis.transcriber` | `Transcriber` | ~~TranscriberTool~~ |
-| `tools.subtitle.subtitle_gen` | `SubtitleGen` | ~~SubtitleGenTool~~ |
+
+| Module                        | Class Name      | NOT                   |
+| ----------------------------- | --------------- | --------------------- |
+| `tools.audio.music_gen`       | `MusicGen`      | ~~MusicGenTool~~      |
+| `tools.video.video_compose`   | `VideoCompose`  | ~~VideoComposeTool~~  |
+| `tools.audio.audio_mixer`     | `AudioMixer`    | ~~AudioMixerTool~~    |
+| `tools.tts.elevenlabs_tts`    | `ElevenLabsTTS` | ~~ElevenLabsTTSTool~~ |
+| `tools.analysis.transcriber`  | `Transcriber`   | ~~TranscriberTool~~   |
+| `tools.subtitle.subtitle_gen` | `SubtitleGen`   | ~~SubtitleGenTool~~   |
+
 
 When in doubt, check: `grep "^class " tools/<path>.py`
 
@@ -473,11 +503,13 @@ All tools call via `.execute(params_dict)` (returns `ToolResult` with `.success`
 
 Three selector tools abstract multi-provider capabilities. **Selectors auto-discover providers from the registry.** Adding a new provider tool automatically makes it available through the selector — no selector code changes needed.
 
-| Selector | Routes to | How it discovers |
-|----------|-----------|-----------------|
-| `tts_selector` | All tools with `capability="tts"` (ElevenLabs, Google TTS, OpenAI, Piper) | `registry.get_by_capability("tts")` |
+
+| Selector         | Routes to                                                                                   | How it discovers                                 |
+| ---------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| `tts_selector`   | All tools with `capability="tts"` (ElevenLabs, Google TTS, OpenAI, Piper)                   | `registry.get_by_capability("tts")`              |
 | `image_selector` | All tools with `capability="image_generation"` (FLUX, Google Imagen, DALL-E, Recraft, etc.) | `registry.get_by_capability("image_generation")` |
-| `video_selector` | All tools with `capability="video_generation"` | `registry.get_by_capability("video_generation")` |
+| `video_selector` | All tools with `capability="video_generation"`                                              | `registry.get_by_capability("video_generation")` |
+
 
 Selectors route based on: user preference > availability > discovery order. They adapt input schemas between providers transparently.
 
@@ -507,6 +539,7 @@ Check music availability in this order and present the options:
 3. **Royalty-free sources:** Note if the user can provide their own track (e.g., from YouTube Audio Library, Jamendo, or other free sources). Offer the `music_library/` drop path.
 
 **Always present the user with explicit choices:**
+
 - Use a track from their library (which one?)
 - Provide a different track (drop it in `music_library/`)
 - Generate one via API (if available — name the provider and cost)
@@ -524,14 +557,16 @@ Each pipeline manifest's `tools_available` field declares what tools a stage can
 
 Each stage produces one canonical artifact that becomes the contract for the next stage. The stage director skill teaches the agent HOW to produce it.
 
-| Stage | Director Skill | Canonical output | Core quality bar |
-|------|---------------|------------------|------------------|
-| `idea` | `*-director.md` | `brief` | Clear hook, target platform, duration, tone, and user intent |
-| `script` | `*-director.md` | `script` | Structured sections, valid timing, coherent narration |
-| `scene_plan` | `*-director.md` | `scene_plan` | Ordered scenes, timings, asset requirements |
-| `assets` | `*-director.md` | `asset_manifest` | Provenance, paths, model/tool metadata, scene linkage |
-| `edit` | `*-director.md` | `edit_decisions` | Concrete cuts, overlays, subtitle/music decisions |
-| `compose` | `*-director.md` | `render_report` | Output paths, encoding profile, verification notes |
+
+| Stage        | Director Skill  | Canonical output | Core quality bar                                             |
+| ------------ | --------------- | ---------------- | ------------------------------------------------------------ |
+| `idea`       | `*-director.md` | `brief`          | Clear hook, target platform, duration, tone, and user intent |
+| `script`     | `*-director.md` | `script`         | Structured sections, valid timing, coherent narration        |
+| `scene_plan` | `*-director.md` | `scene_plan`     | Ordered scenes, timings, asset requirements                  |
+| `assets`     | `*-director.md` | `asset_manifest` | Provenance, paths, model/tool metadata, scene linkage        |
+| `edit`       | `*-director.md` | `edit_decisions` | Concrete cuts, overlays, subtitle/music decisions            |
+| `compose`    | `*-director.md` | `render_report`  | Output paths, encoding profile, verification notes           |
+
 
 Stage contract rules:
 
@@ -598,22 +633,24 @@ Tool rules:
 
 ## Style Playbooks
 
-| Playbook | Best For |
-|----------|----------|
-| `clean-professional` | Corporate, educational, SaaS |
-| `flat-motion-graphics` | Social media, TikTok, startups |
-| `minimalist-diagram` | Technical deep-dives, architecture |
+
+| Playbook               | Best For                           |
+| ---------------------- | ---------------------------------- |
+| `clean-professional`   | Corporate, educational, SaaS       |
+| `flat-motion-graphics` | Social media, TikTok, startups     |
+| `minimalist-diagram`   | Technical deep-dives, architecture |
+
 
 ## Layer Map
 
 OpenMontage has three instruction layers:
 
 1. `tools/`
-   What exists, what is available, cost, runtime, fallback, related skills.
+  What exists, what is available, cost, runtime, fallback, related skills.
 2. `skills/`
-   How OpenMontage wants those tools used in pipelines.
+  How OpenMontage wants those tools used in pipelines.
 3. `.agents/skills/`
-   Raw vendor or technology knowledge.
+  Raw vendor or technology knowledge.
 
 Reading order:
 
@@ -633,32 +670,37 @@ Example: Before calling `kling_video`, read its `agent_skills` → `ai-video-gen
 
 The `.agents/skills/` directory is large. When you're not coming in through a tool's `agent_skills` pointer, use this table to find the right file by *what you're trying to do*:
 
-| Category | Skills |
-|---|---|
-| **Composition runtime** | `remotion`, `remotion-best-practices`, `synthetic-screen-recording` (fake terminal/UI demos via Remotion TerminalScene) |
+
+| Category                          | Skills                                                                                                                                                                                                                                                                              |
+| --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Composition runtime**           | `remotion`, `remotion-best-practices`, `synthetic-screen-recording` (fake terminal/UI demos via Remotion TerminalScene)                                                                                                                                                             |
 | **Animation knowledge (generic)** | `gsap-core`, `gsap-timeline`, `gsap-plugins` (SplitText / MorphSVG / DrawSVG / MotionPath / Flip / CustomEase), `gsap-utils`, `gsap-react`, `gsap-performance`, `gsap-scrolltrigger`, `gsap-frameworks`, `framer-motion` (Disney 12 principles), `lottie-bodymovin` (Lottie export) |
-| **Image generation** | `bfl-api`, `flux-best-practices` |
-| **Video generation** | `seedance-2-0` (preferred premium default — cinematic, trailer, multi-shot, synced audio, lip-sync), `ai-video-gen`, `ltx2` |
-| **Audio** | `elevenlabs`, `music`, `sound-effects`, `acestep`, `text-to-speech`, `setup-api-key` |
-| **Avatar / lip-sync** | `avatar-video`, `heygen`, `create-video`, `faceswap`, `video-translate`, `speech-to-text`, `agents` |
-| **Capture** | `playwright-recording` (browser flows), `ffmpeg` (post) |
-| **Visualization** | `beautiful-mermaid`, `d3-viz`, `manim-composer`, `manimce-best-practices`, `manimgl-best-practices` |
-| **Media editing** | `video-edit`, `video-download`, `video-understand`, `video_toolkit`, `visual-style` |
+| **Image generation**              | `bfl-api`, `flux-best-practices`                                                                                                                                                                                                                                                    |
+| **Video generation**              | `seedance-2-0` (preferred premium default — cinematic, trailer, multi-shot, synced audio, lip-sync), `ai-video-gen`, `ltx2`                                                                                                                                                         |
+| **Audio**                         | `elevenlabs`, `music`, `sound-effects`, `acestep`, `text-to-speech`, `setup-api-key`                                                                                                                                                                                                |
+| **Avatar / lip-sync**             | `avatar-video`, `heygen`, `create-video`, `faceswap`, `video-translate`, `speech-to-text`, `agents`                                                                                                                                                                                 |
+| **Capture**                       | `playwright-recording` (browser flows), `ffmpeg` (post)                                                                                                                                                                                                                             |
+| **Visualization**                 | `beautiful-mermaid`, `d3-viz`, `manim-composer`, `manimce-best-practices`, `manimgl-best-practices`                                                                                                                                                                                 |
+| **Media editing**                 | `video-edit`, `video-download`, `video-understand`, `video_toolkit`, `visual-style`                                                                                                                                                                                                 |
+
 
 **When in doubt, read the category's meta routing file first:**
+
 - Picking an animation runtime? → `skills/meta/animation-runtime-selector.md` routes between Remotion primitives, GSAP plugins, framer-motion, Lottie, Manim, D3.
 - Picking a screen-recording mode (real capture vs synthetic terminal)? → `pipeline_defs/screen-demo.yaml` + `skills/pipelines/screen-demo/idea-director.md`.
 
 ## Quick Lookup
 
-| Question | Where to look |
-|----------|---------------|
-| What tools exist? | `tools/tool_registry.py` and `registry.support_envelope()` |
-| What providers are available for a capability? | `registry.capability_catalog()` |
-| What tools exist for a vendor? | `registry.provider_catalog()` |
-| How does a tool actually work? | the tool's `usage_location` from the registry |
-| How should this pipeline stage behave? | `skills/pipelines/<pipeline>/...` |
-| What is the checkpoint/review policy? | `skills/meta/` |
+
+| Question                                       | Where to look                                              |
+| ---------------------------------------------- | ---------------------------------------------------------- |
+| What tools exist?                              | `tools/tool_registry.py` and `registry.support_envelope()` |
+| What providers are available for a capability? | `registry.capability_catalog()`                            |
+| What tools exist for a vendor?                 | `registry.provider_catalog()`                              |
+| How does a tool actually work?                 | the tool's `usage_location` from the registry              |
+| How should this pipeline stage behave?         | `skills/pipelines/<pipeline>/...`                          |
+| What is the checkpoint/review policy?          | `skills/meta/`                                             |
+
 
 ## What Not To Do
 
@@ -672,3 +714,4 @@ The `.agents/skills/` directory is large. When you're not coming in through a to
 - Do not present a single unavailable tool in isolation. Always show the full capability picture: "X of Y providers configured for this capability."
 - Do not skip the Provider Menu at preflight. The user must see what they have AND what they could unlock.
 - Do not change provider, model, or render path without telling the user first and getting approval when the change is material.
+
