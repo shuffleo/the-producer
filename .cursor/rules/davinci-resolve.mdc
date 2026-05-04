@@ -10,8 +10,8 @@ This workspace has the DaVinci Resolve MCP server configured at `~/.cursor/mcp.j
 
 ## Prerequisites
 
-- DaVinci Resolve Studio must be running
-- Preferences > General > "External scripting using" set to **Local**
+- **DaVinci Resolve Studio** must be running (free edition does not support scripting)
+- In Resolve 20+, scripting is enabled by default — no preferences toggle needed
 - The MCP server uses the **compound** mode (27 tools) by default
 
 ## Key tools
@@ -45,6 +45,27 @@ Always switch to the correct page before operations:
 
 **Rule:** If the user says "edit", "assemble", "timeline", "cut", "grade", "render" with existing clips → Resolve. If the user says "generate", "compose", "template", "programmatic", "React" → Remotion. If ambiguous, ask the user.
 
+## Known gotchas
+
+- **SetMetadata dict form is broken in Resolve 20.** Use `item.SetMetadata(key, value)` (key-value form) instead of `item.SetMetadata({dict})`. The dict form silently fails.
+- **CSV metadata must use comma-only separators.** Write `"ants,myna,moon"` NOT `"ants, myna, moon"`. Resolve Smart Bins split on commas and treat `" myna"` (leading space) as a separate keyword from `"myna"`, creating duplicate bins.
+- **Normalize singular/plural.** Always use the plural canonical form (ants not ant, clocks not clock). The `sanitize_tag()` function in `scripts/resolve/resolve_helpers.py` handles this automatically.
+
+## Batch operations — use scripts, not MCP
+
+For operations on many clips (tagging, importing, bulk edits), do NOT call MCP tools individually — the round-trip overhead will freeze the conversation. Instead, write a Python script that uses the Resolve scripting API directly and run it via Shell.
+
+Reusable helpers: `scripts/resolve/resolve_helpers.py`
+- `get_resolve()`, `get_project()`, `get_media_pool()`, `get_timeline()`
+- `import_media_to_bin(folder_path, file_paths)`
+- `get_clips_in_folder(folder_path)` — returns name, id, and item object
+- `tag_clips_from_jsonl(folder_path, jsonl_path)` — bulk metadata from JSONL
+- `add_timeline_markers(markers)` — bulk markers from a list of dicts
+- `create_timeline_with_audio(name, audio_clip_name, folder_path)`
+- `navigate_to_folder(mp, path)` — navigate media pool by path string
+
+Use MCP tools only for single interactive operations (check version, switch page, get current timeline).
+
 ## Skill reference
 
-Read `.agents/skills/davinci-resolve/SKILL.md` for the full tool reference, workflow patterns, error recovery, and known gotchas.
+Read `.agents/skills/davinci-resolve/SKILL.md` for the full MCP tool reference, workflow patterns, error recovery, and known gotchas.

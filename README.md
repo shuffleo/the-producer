@@ -14,7 +14,7 @@ An agentic workflow for creating videos — from concept to final render. The ag
 | **Agent**                   | Cursor (with MCP servers)                                      |
 | **Image generation**        | Recraft V4, Nano Banana 2, GPT Image 2 (via fal.ai)            |
 | **Video generation**        | Kling v3/O3, Seedance 2.0 (via fal.ai)                         |
-| **Video editing (Route A)** | DaVinci Resolve (via MCP) — full NLE with color, audio, Fusion |
+| **Video editing (Route A)** | DaVinci Resolve **Studio** (via MCP) — full NLE with color, audio, Fusion |
 | **Video editing (Route B)** | Remotion + HyperFrames + FFmpeg — code-based, no NLE needed    |
 | **Audio**                   | ElevenLabs, Suno, Piper TTS, ACE-Step                          |
 
@@ -46,7 +46,7 @@ cd davinci-resolve-mcp
 python install.py --clients cursor
 ```
 
-Requires DaVinci Resolve running with **Preferences > General > External scripting** set to **Local**. The MCP server works with both the free and Studio editions, though Studio unlocks the full scripting API.
+Requires **DaVinci Resolve Studio** (the free edition does not support external scripting). In Resolve 20+, scripting is enabled by default — no preferences toggle needed.
 
 ## Project structure
 

@@ -82,7 +82,7 @@ DaVinci Resolve Studio is the primary NLE (non-linear editor) for this studio. T
 
 ### Requirement
 
-DaVinci Resolve Studio must be running with **External scripting set to Local** (Preferences > General).
+**DaVinci Resolve Studio** must be running (free edition does not support scripting). In Resolve 20+, scripting is enabled by default.
 
 ## Video Production Tool Routing
 
